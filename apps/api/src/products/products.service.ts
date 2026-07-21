@@ -46,8 +46,16 @@ export class ProductsService {
 
   async update(id: string, dto: UpdateProductDto) {
     await this.findOne(id, true);
-    const { stock: _stock, ...safeDto } = dto;
-    return this.prisma.product.update({ where: { id }, data: { ...safeDto, ...(dto.sku ? { sku: dto.sku.trim().toUpperCase() } : {}), ...(dto.name ? { name: dto.name.trim() } : {}) } });
+    return this.prisma.product.update({
+      where: { id },
+      data: {
+        ...dto,
+        ...(dto.sku ? { sku: dto.sku.trim().toUpperCase() } : {}),
+        ...(dto.name ? { name: dto.name.trim() } : {}),
+        ...(dto.description !== undefined ? { description: dto.description.trim() || null } : {}),
+        ...(dto.imageUrl !== undefined ? { imageUrl: dto.imageUrl.trim() || null } : {}),
+      },
+    });
   }
 
   async remove(id: string) {

@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -10,13 +10,34 @@ import { GlobalExceptionFilter } from './common/filters/global-exception.filter'
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
   const config = app.get(ConfigService);
-  const origins = config.getOrThrow<string>('CORS_ORIGINS').split(',').map((item) => item.trim());
+  const origins = config
+    .getOrThrow<string>('CORS_ORIGINS')
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean);
 
   app.getHttpAdapter().getInstance().set('trust proxy', 1);
-  app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
+  app.use(
+    helmet({
+      contentSecurityPolicy: false,
+      crossOriginResourcePolicy: { policy: 'cross-origin' },
+    }),
+  );
   app.use(cookieParser(config.getOrThrow<string>('COOKIE_SECRET')));
-  app.enableCors({ origin: origins, credentials: true, methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'], allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-Token', 'Idempotency-Key'] });
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true, transformOptions: { enableImplicitConversion: true } }));
+  app.enableCors({
+    origin: origins,
+    credentials: true,
+    methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-Token', 'Idempotency-Key'],
+  });
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+      transformOptions: { enableImplicitConversion: true },
+    }),
+  );
   app.useGlobalFilters(new GlobalExceptionFilter());
   app.setGlobalPrefix('api/v1');
   app.enableShutdownHooks();
@@ -29,10 +50,18 @@ async function bootstrap(): Promise<void> {
       .addBearerAuth()
       .addCookieAuth('access_token', { type: 'apiKey', in: 'cookie' }, 'access_token')
       .build();
-    SwaggerModule.setup('docs', app, SwaggerModule.createDocument(app, swaggerConfig), { swaggerOptions: { persistAuthorization: true } });
+    SwaggerModule.setup('docs', app, SwaggerModule.createDocument(app, swaggerConfig), {
+      swaggerOptions: { persistAuthorization: true },
+    });
   }
 
-  await app.listen(config.get<number>('PORT') ?? 3001, '0.0.0.0');
+  const port = config.get<number>('PORT') ?? 3001;
+  await app.listen(port, '0.0.0.0');
+  Logger.log(`OrderFlow API iniciada na porta ${port}`, 'Bootstrap');
 }
 
-void bootstrap();
+bootstrap().catch((error: unknown) => {
+  const logger = new Logger('Bootstrap');
+  logger.error('Falha ao iniciar a API.', error instanceof Error ? error.stack : String(error));
+  process.exit(1);
+});

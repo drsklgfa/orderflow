@@ -2,40 +2,54 @@
 
 ## Antes de enviar ao GitHub
 
-- [ ] Substituir o nome do autor no `LICENSE`, se desejado;
-- [ ] confirmar que nenhum arquivo `.env` está versionado;
-- [ ] executar testes da API;
-- [ ] executar build da API e do frontend;
-- [ ] revisar credenciais demonstrativas;
-- [ ] publicar somente dados fictícios.
+- [ ] confirmar que nenhum arquivo `.env` real está versionado;
+- [ ] copiar todo o conteúdo do pacote corrigido sobre a pasta local `orderflow`;
+- [ ] executar `ATUALIZAR_GITHUB.bat` ou `ATUALIZAR_GITHUB.ps1`;
+- [ ] confirmar que o workflow de CI ficou verde.
 
 ## Railway
 
-- [ ] criar PostgreSQL;
-- [ ] criar serviço da API com raiz `apps/api`;
-- [ ] configurar `DATABASE_URL`;
-- [ ] gerar três segredos aleatórios diferentes;
-- [ ] cadastrar `CORS_ORIGINS`;
+- [ ] manter o diretório raiz do serviço como `/apps/api`;
+- [ ] manter o PostgreSQL no mesmo projeto;
+- [ ] manter `DATABASE_URL=${{Postgres.DATABASE_URL}}` no serviço `orderflow`;
+- [ ] cadastrar três segredos diferentes com pelo menos 32 caracteres;
+- [ ] definir `NODE_ENV=production`;
 - [ ] definir `COOKIE_SECURE=true`;
 - [ ] definir `COOKIE_SAME_SITE=lax`;
-- [ ] definir health check `/api/v1/health`;
-- [ ] confirmar `/docs` e `/api/v1/health`.
+- [ ] definir `ENABLE_SWAGGER=true`;
+- [ ] usar a porta pública `3001`;
+- [ ] não criar nem manter Custom Start Command manual: `railway.toml` já define o comando correto;
+- [ ] confirmar `https://SEU-DOMINIO/api/v1/health`;
+- [ ] confirmar `https://SEU-DOMINIO/docs`.
+
+Variáveis mínimas da API:
+
+```env
+NODE_ENV=production
+DATABASE_URL=${{Postgres.DATABASE_URL}}
+JWT_ACCESS_SECRET=valor-aleatorio-com-mais-de-32-caracteres
+JWT_REFRESH_SECRET=outro-valor-aleatorio-com-mais-de-32-caracteres
+COOKIE_SECRET=terceiro-valor-aleatorio-com-mais-de-32-caracteres
+CORS_ORIGINS=http://localhost:3000
+ACCESS_TOKEN_MINUTES=15
+REFRESH_TOKEN_DAYS=7
+ENABLE_SWAGGER=true
+COOKIE_SAME_SITE=lax
+COOKIE_SECURE=true
+```
 
 ## Vercel
 
-- [ ] importar o repositório;
-- [ ] definir raiz `apps/web`;
-- [ ] cadastrar `INTERNAL_API_URL=https://DOMINIO-API/api/v1`;
+- [ ] importar o mesmo repositório;
+- [ ] definir `apps/web` como Root Directory;
+- [ ] cadastrar `INTERNAL_API_URL=https://orderflow-prod.up.railway.app`;
 - [ ] realizar deploy;
-- [ ] testar cookies no navegador;
-- [ ] testar login cliente e admin;
-- [ ] testar checkout e painel.
+- [ ] testar login de cliente e administrador;
+- [ ] testar carrinho, checkout, pedidos e painel administrativo.
 
 ## GitHub
 
-- [ ] branch principal protegida;
 - [ ] Actions habilitadas;
 - [ ] Dependabot habilitado;
 - [ ] secret scanning habilitado;
-- [ ] descrição e tópicos do repositório preenchidos;
-- [ ] URLs do frontend e Swagger adicionadas ao README.
+- [ ] URLs do frontend e Swagger adicionadas ao README após o deploy.

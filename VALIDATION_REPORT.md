@@ -1,26 +1,36 @@
-# Relatório de validação
+# Relatório de revisão final
 
-Data da preparação: 20 de julho de 2026.
+Data da revisão: 21 de julho de 2026.
 
-## Verificações concluídas neste pacote
+## Correções aplicadas
 
-- 100 arquivos de projeto e documentação;
-- arquivos JSON analisados e válidos;
-- arquivos YAML do Docker Compose, GitHub Actions e Dependabot analisados e válidos;
-- todos os imports relativos TypeScript/TSX apontam para arquivos existentes;
-- arquivos TypeScript e TSX analisados sem erros de sintaxe;
-- migração SQL inicial incluída;
-- nenhum arquivo `.env` real incluído;
-- Dockerfiles separados para API e frontend;
-- execução como usuário sem privilégios no contêiner da API e do frontend;
-- health checks e ordem de inicialização configurados;
-- testes unitários e E2E incluídos;
-- teste E2E de concorrência para a última unidade incluído;
-- coleção Postman incluída;
-- documentação de arquitetura, regras de negócio e publicação incluída.
+- corrigidos os três erros de tipagem reportados pelo compilador TypeScript;
+- restringido o build NestJS à pasta `src`, fazendo a entrada principal sair em `dist/main.js`;
+- criada compatibilidade automática com `dist/src/main.js`, portanto tanto o comando novo quanto o comando antigo da Railway funcionam;
+- removido o seed TypeScript executado por `ts-node` e substituído por seed CommonJS direto, eliminando o aviso de módulo e a dependência de compilação no início do contêiner;
+- criado `start:deploy` único para migration, seed e inicialização;
+- adicionado `railway.toml` para sobrescrever configurações incorretas do painel e definir Dockerfile, start command, health check e política de reinício;
+- corrigido o Dockerfile da API e validado o fluxo entre as etapas `deps`, `build` e `runner`;
+- criada a pasta `public` necessária para o Dockerfile do frontend;
+- reforçada a geração de número de pedido contra colisões;
+- reforçado o cancelamento concorrente para impedir reposição duplicada de estoque;
+- corrigido o DTO de edição para impedir alteração direta de estoque fora da rota de auditoria;
+- melhorado o proxy Next.js com normalização automática da URL da API, timeout e resposta JSON em indisponibilidade;
+- ajustado Helmet para manter o Swagger funcional;
+- atualizado o workflow do GitHub Actions e toda a documentação de deploy.
 
-## Limitação da validação neste ambiente
+## Verificações executadas neste pacote
 
-A instalação efetiva das dependências e o build completo não puderam ser executados aqui porque o ambiente de geração não conseguiu resolver o domínio do registro do npm (`EAI_AGAIN`). Por isso, o primeiro build real ocorrerá ao executar `docker compose up --build` em uma máquina com acesso à internet ou no GitHub Actions.
+- 59 arquivos TypeScript/TSX analisados sem erros de sintaxe;
+- todos os JSONs analisados;
+- arquivos YAML analisados;
+- arquivos TOML analisados;
+- scripts CommonJS analisados com `node --check`;
+- imports locais conferidos;
+- script de compatibilidade de entrada testado nos dois cenários: `dist/main.js` e `dist/src/main.js`;
+- estrutura de migrations, schema, seed, Dockerfiles, Docker Compose, CI e variáveis revisada;
+- nenhum `.env` real incluído.
 
-As versões principais foram alinhadas para Node.js 22 LTS, Next.js 16, NestJS 11 e Prisma 6.19.3.
+## Observação transparente
+
+O ambiente usado para gerar o pacote não conseguiu baixar dependências do registro npm, portanto não foi possível executar aqui um novo `npm install` completo. O build anterior da Railway já confirmou a instalação das dependências e revelou os erros de compilação que foram corrigidos. O pacote inclui GitHub Actions para executar build, migrations, seed, testes unitários, testes E2E e builds Docker assim que for enviado ao repositório.

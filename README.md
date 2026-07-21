@@ -68,7 +68,7 @@ orderflow/
 │   │   ├── prisma/
 │   │   │   ├── migrations/
 │   │   │   ├── schema.prisma
-│   │   │   └── seed.ts
+│   │   │   └── seed.cjs
 │   │   └── src/
 │   │       ├── auth/
 │   │       ├── products/
@@ -189,19 +189,19 @@ openssl rand -base64 48
 1. Crie um projeto e adicione PostgreSQL.
 2. Crie um serviço pelo repositório GitHub.
 3. Defina `apps/api` como diretório raiz do serviço.
-4. Use o Dockerfile existente.
+4. Use o Dockerfile existente; o arquivo `railway.toml` já define o comando de início e o health check.
 5. Configure as variáveis da API.
 6. Use a `DATABASE_URL` fornecida pelo PostgreSQL.
-7. Configure o health check como `/api/v1/health`.
-8. Gere um domínio público para a API.
+7. Não é necessário cadastrar um Custom Start Command manualmente.
+8. Gere um domínio público para a API na porta `3001`.
 
-O Dockerfile executa `prisma migrate deploy`, o seed idempotente e depois inicia a API.
+O `railway.toml` e o Dockerfile executam `prisma migrate deploy`, o seed idempotente e depois iniciam a API. O pacote também gera entradas compatíveis em `dist/main.js` e `dist/src/main.js`, evitando o erro de caminho que ocorreu no primeiro deploy.
 
 ### 3. Vercel: frontend
 
 1. Importe o mesmo repositório.
 2. Defina `apps/web` como diretório raiz.
-3. Cadastre `INTERNAL_API_URL` com a URL da API terminando em `/api/v1`.
+3. Cadastre `INTERNAL_API_URL` com `https://SEU-DOMINIO.up.railway.app` (o proxy também aceita a URL terminando em `/api/v1`).
 4. Faça o deploy.
 
 Depois, atualize `CORS_ORIGINS` na API com o domínio definitivo da Vercel e use:

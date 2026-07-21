@@ -47,11 +47,11 @@ jobs:
           node-version: 22
       - run: npm install --no-audit --no-fund
       - run: npx prisma generate
+      - run: npm run build
       - run: npx prisma migrate deploy
       - run: npm run prisma:seed
       - run: npm test -- --runInBand
       - run: npm run test:e2e -- --runInBand
-      - run: npm run build
 
   web:
     runs-on: ubuntu-latest
