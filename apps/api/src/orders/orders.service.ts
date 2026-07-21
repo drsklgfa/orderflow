@@ -69,7 +69,7 @@ export class OrdersService {
     if (!order) throw new AppException('ORDER_NOT_FOUND', 'Pedido não encontrado.', HttpStatus.NOT_FOUND);
     if (next === order.status) return order;
     if (next === OrderStatus.CANCELLED) {
-      if (![OrderStatus.PENDING, OrderStatus.PAID].includes(order.status)) throw new AppException('INVALID_STATUS_TRANSITION', 'Este pedido não pode mais ser cancelado.', HttpStatus.CONFLICT);
+      if (!([OrderStatus.PENDING, OrderStatus.PAID] as OrderStatus[]).includes(order.status)) throw new AppException('INVALID_STATUS_TRANSITION', 'Este pedido não pode mais ser cancelado.', HttpStatus.CONFLICT);
       return this.cancelAndRestock(orderId, 'Cancelamento realizado pelo administrador');
     }
     if (!allowedTransitions[order.status].includes(next)) throw new AppException('INVALID_STATUS_TRANSITION', `Não é permitido alterar de ${order.status} para ${next}.`, HttpStatus.CONFLICT);

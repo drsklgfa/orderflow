@@ -27,7 +27,7 @@ async function bootstrap(): Promise<void> {
       .setDescription('API de demonstração para pedidos, estoque, carrinho e autenticação segura.')
       .setVersion('1.0.0')
       .addBearerAuth()
-      .addCookieAuth('access_token', {}, 'access_token')
+      .addCookieAuth('access_token', { type: 'apiKey', in: 'cookie', name: 'access_token' }, 'access_token')
       .build();
     SwaggerModule.setup('docs', app, SwaggerModule.createDocument(app, swaggerConfig), { swaggerOptions: { persistAuthorization: true } });
   }

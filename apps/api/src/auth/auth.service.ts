@@ -111,7 +111,7 @@ export class AuthService {
     return safe;
   }
 
-  private async issueSession(user: User, familyId = randomUUID()): Promise<SessionResult> {
+  private async issueSession(user: User, familyId: string = randomUUID()): Promise<SessionResult> {
     const csrfToken = randomUUID();
     const accessMinutes = this.config.get<number>('ACCESS_TOKEN_MINUTES') ?? 15;
     const refreshDays = this.config.get<number>('REFRESH_TOKEN_DAYS') ?? 7;
