@@ -1,0 +1,173 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  CUSTOMER
+}
+
+enum CartStatus {
+  ACTIVE
+  CONVERTED
+  ABANDONED
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum StockMovementType {
+  ENTRY
+  SALE
+  RETURN
+  ADJUSTMENT
+}
+
+model User {
+  id            String         @id @default(uuid()) @db.Uuid
+  name          String
+  email         String         @unique
+  passwordHash  String
+  role          Role           @default(CUSTOMER)
+  isActive      Boolean        @default(true)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  refreshTokens RefreshToken[]
+  cart          Cart?
+  orders        Order[]
+  checkoutKeys  CheckoutKey[]
+
+  @@index([role])
+  @@index([createdAt])
+}
+
+model RefreshToken {
+  id                String    @id @db.Uuid
+  familyId          String    @db.Uuid
+  tokenHash         String
+  userId            String    @db.Uuid
+  expiresAt         DateTime
+  revokedAt         DateTime?
+  replacedByTokenId String?   @db.Uuid
+  createdAt         DateTime  @default(now())
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, familyId])
+  @@index([expiresAt])
+}
+
+model Product {
+  id             String          @id @default(uuid()) @db.Uuid
+  sku            String          @unique
+  name           String
+  description    String?
+  imageUrl       String?
+  priceInCents   Int
+  stock          Int             @default(0)
+  active         Boolean         @default(true)
+  deletedAt      DateTime?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  cartItems      CartItem[]
+  orderItems     OrderItem[]
+  stockMovements StockMovement[]
+
+  @@index([active, deletedAt])
+  @@index([name])
+}
+
+model Cart {
+  id        String     @id @default(uuid()) @db.Uuid
+  userId    String     @unique @db.Uuid
+  status    CartStatus @default(ACTIVE)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     CartItem[]
+}
+
+model CartItem {
+  id        String   @id @default(uuid()) @db.Uuid
+  cartId    String   @db.Uuid
+  productId String   @db.Uuid
+  quantity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id])
+
+  @@unique([cartId, productId])
+  @@index([productId])
+}
+
+model Order {
+  id           String      @id @default(uuid()) @db.Uuid
+  number       String      @unique
+  userId       String      @db.Uuid
+  status       OrderStatus @default(PENDING)
+  totalInCents Int
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  user         User        @relation(fields: [userId], references: [id])
+  items        OrderItem[]
+  movements    StockMovement[]
+  checkoutKey  CheckoutKey?
+
+  @@index([userId, createdAt])
+  @@index([status, createdAt])
+}
+
+model OrderItem {
+  id               String  @id @default(uuid()) @db.Uuid
+  orderId          String  @db.Uuid
+  productId        String  @db.Uuid
+  productName      String
+  productSku       String
+  unitPriceInCents Int
+  quantity         Int
+  subtotalInCents  Int
+  order            Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product          Product @relation(fields: [productId], references: [id])
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model StockMovement {
+  id        String            @id @default(uuid()) @db.Uuid
+  productId String            @db.Uuid
+  orderId   String?           @db.Uuid
+  type      StockMovementType
+  quantity  Int
+  reason    String
+  createdAt DateTime          @default(now())
+  product   Product           @relation(fields: [productId], references: [id])
+  order     Order?            @relation(fields: [orderId], references: [id])
+
+  @@index([productId, createdAt])
+  @@index([orderId])
+}
+
+model CheckoutKey {
+  id              String   @id @default(uuid()) @db.Uuid
+  key             String
+  userId          String   @db.Uuid
+  responseOrderId String?  @unique @db.Uuid
+  createdAt       DateTime @default(now())
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  responseOrder   Order?   @relation(fields: [responseOrderId], references: [id])
+
+  @@unique([userId, key])
+  @@index([createdAt])
+}

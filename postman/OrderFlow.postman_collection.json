@@ -1,0 +1,177 @@
+{
+  "info": {
+    "_postman_id": "9cb1aa6d-0aaf-49a4-947d-OrderFlow2026",
+    "name": "OrderFlow API",
+    "description": "Coleção para testar autenticação, produtos, carrinho, checkout e administração. Faça login primeiro; o script salva o token CSRF e o Postman mantém os cookies automaticamente.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3001/api/v1" },
+    { "key": "csrfToken", "value": "" },
+    { "key": "productId", "value": "" },
+    { "key": "orderId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login cliente demo",
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "const data = pm.response.json();",
+              "if (data.csrfToken) pm.collectionVariables.set('csrfToken', data.csrfToken);",
+              "pm.test('Login realizado', () => pm.response.to.have.status(200));"
+            ] }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"cliente@orderflow.demo\",\n  \"password\": \"DemoCliente123!\"\n}" },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        },
+        {
+          "name": "Login administrador demo",
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "const data = pm.response.json();",
+              "if (data.csrfToken) pm.collectionVariables.set('csrfToken', data.csrfToken);",
+              "pm.test('Login realizado', () => pm.response.to.have.status(200));"
+            ] }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"admin@orderflow.demo\",\n  \"password\": \"DemoAdmin123!\"\n}" },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        },
+        {
+          "name": "Minha sessão",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/auth/me" }
+        },
+        {
+          "name": "Renovar sessão",
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "const data = pm.response.json();",
+              "if (data.csrfToken) pm.collectionVariables.set('csrfToken', data.csrfToken);"
+            ] }
+          }],
+          "request": { "method": "POST", "header": [], "url": "{{baseUrl}}/auth/refresh" }
+        },
+        {
+          "name": "Logout",
+          "request": { "method": "POST", "header": [], "url": "{{baseUrl}}/auth/logout" }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Listar produtos",
+          "event": [{
+            "listen": "test",
+            "script": { "exec": [
+              "const data = pm.response.json();",
+              "if (data.items && data.items[0]) pm.collectionVariables.set('productId', data.items[0].id);"
+            ] }
+          }],
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/products?limit=20" }
+        },
+        {
+          "name": "Criar produto (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-CSRF-Token", "value": "{{csrfToken}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"sku\": \"OF-TEST-999\",\n  \"name\": \"Produto de Teste\",\n  \"description\": \"Criado pela coleção Postman\",\n  \"priceInCents\": 9990,\n  \"stock\": 5,\n  \"active\": true\n}" },
+            "url": "{{baseUrl}}/products"
+          }
+        },
+        {
+          "name": "Ajustar estoque (Admin)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-CSRF-Token", "value": "{{csrfToken}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"delta\": 2,\n  \"reason\": \"Ajuste via Postman\"\n}" },
+            "url": "{{baseUrl}}/products/{{productId}}/stock"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cart and Orders",
+      "item": [
+        {
+          "name": "Adicionar item ao carrinho",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-CSRF-Token", "value": "{{csrfToken}}" }
+            ],
+            "body": { "mode": "raw", "raw": "{\n  \"productId\": \"{{productId}}\",\n  \"quantity\": 1\n}" },
+            "url": "{{baseUrl}}/cart/items"
+          }
+        },
+        {
+          "name": "Consultar carrinho",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/cart" }
+        },
+        {
+          "name": "Finalizar pedido",
+          "event": [{
+            "listen": "prerequest",
+            "script": { "exec": ["pm.variables.set('idempotencyKey', pm.variables.replaceIn('{{$guid}}'));" ] }
+          }, {
+            "listen": "test",
+            "script": { "exec": [
+              "const data = pm.response.json();",
+              "if (data.id) pm.collectionVariables.set('orderId', data.id);"
+            ] }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "X-CSRF-Token", "value": "{{csrfToken}}" },
+              { "key": "Idempotency-Key", "value": "{{idempotencyKey}}" }
+            ],
+            "url": "{{baseUrl}}/orders/checkout"
+          }
+        },
+        {
+          "name": "Meus pedidos",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/orders/me?limit=20" }
+        },
+        {
+          "name": "Cancelar pedido pendente",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "X-CSRF-Token", "value": "{{csrfToken}}" }],
+            "url": "{{baseUrl}}/orders/{{orderId}}/cancel"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Administration",
+      "item": [
+        { "name": "Dashboard", "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/admin/dashboard" } },
+        { "name": "Todos os pedidos", "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/admin/orders?limit=20" } },
+        { "name": "Clientes", "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/admin/customers?limit=20" } },
+        { "name": "Movimentações", "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/admin/inventory/movements?limit=20" } }
+      ]
+    }
+  ]
+}
