@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#3157d5">
+  <meta name="description" content="OrderFlow — e-commerce SaaS full stack com pedidos, estoque, checkout transacional, segurança e painel administrativo.">
+  <meta property="og:title" content="OrderFlow — E-commerce SaaS Full Stack">
+  <meta property="og:description" content="Demonstração interativa de um sistema profissional de pedidos, estoque e operação comercial.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="./assets/og-orderflow.png">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>OrderFlow — E-commerce SaaS Full Stack</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./assets/styles.css">
+  <script defer src="./assets/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+
+  <header class="site-header" id="inicio">
+    <div class="container nav-wrap">
+      <a class="brand" href="#inicio" aria-label="OrderFlow, início">
+        <span class="brand-mark" aria-hidden="true">OF</span>
+        <span><strong>OrderFlow</strong><small>Commerce Operations</small></span>
+      </a>
+      <nav class="desktop-nav" aria-label="Navegação principal">
+        <a href="#produto">Produto</a>
+        <a href="#demo">Demonstração</a>
+        <a href="#engenharia">Engenharia</a>
+        <a href="#arquitetura">Arquitetura</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="icon-button" id="theme-toggle" type="button" aria-label="Alternar tema" title="Alternar tema">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"/></svg>
+        </button>
+        <a class="button ghost compact" href="https://github.com/drsklgfa/orderflow" target="_blank" rel="noreferrer">Código-fonte</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero">
+      <div class="hero-grid-glow" aria-hidden="true"></div>
+      <div class="container hero-layout">
+        <div class="hero-copy">
+          <div class="badge"><span></span> Projeto full stack de portfólio</div>
+          <h1>Pedidos e estoque com <em>regras de negócio reais.</em></h1>
+          <p>Uma plataforma completa para operação de e-commerce: catálogo, carrinho, checkout transacional, pedidos, clientes, estoque auditável e administração em um único fluxo.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#demo">Explorar demonstração</a>
+            <a class="button secondary" href="#arquitetura">Ver arquitetura</a>
+          </div>
+          <div class="proof-row" aria-label="Destaques técnicos">
+            <span><b>✓</b> Transações serializáveis</span>
+            <span><b>✓</b> JWT rotativo + CSRF</span>
+            <span><b>✓</b> Docker + CI</span>
+          </div>
+        </div>
+
+        <div class="hero-product" aria-label="Prévia do painel administrativo">
+          <div class="browser-bar">
+            <span class="browser-dots"><i></i><i></i><i></i></span>
+            <span class="address">orderflow.app/admin</span>
+            <span class="secure">● Seguro</span>
+          </div>
+          <div class="app-shell">
+            <aside class="mini-sidebar">
+              <span class="mini-logo">OF</span>
+              <i class="active"></i><i></i><i></i><i></i><i></i>
+            </aside>
+            <div class="mini-content">
+              <div class="mini-top">
+                <div><small>VISÃO GERAL</small><strong>Painel operacional</strong></div>
+                <span>Atualizado agora</span>
+              </div>
+              <div class="mini-metrics">
+                <article><small>Receita</small><strong>R$ 86,4 mil</strong><b>↗ 8,2%</b></article>
+                <article><small>Pedidos</small><strong>1.248</strong><b>↗ 12,5%</b></article>
+                <article><small>Clientes</small><strong>386</strong><b>↗ 6,1%</b></article>
+                <article><small>Estoque baixo</small><strong>6</strong><b class="warn">Atenção</b></article>
+              </div>
+              <div class="mini-lower">
+                <div class="chart-panel">
+                  <div class="panel-title"><strong>Receita semanal</strong><span>Últimos 7 dias</span></div>
+                  <div class="chart-bars" aria-hidden="true">
+                    <i style="--h:35%"></i><i style="--h:52%"></i><i style="--h:46%"></i><i style="--h:72%"></i><i style="--h:62%"></i><i style="--h:88%"></i><i style="--h:78%"></i>
+                  </div>
+                </div>
+                <div class="stock-panel">
+                  <div class="panel-title"><strong>Estoque crítico</strong><span>6 itens</span></div>
+                  <div class="stock-item"><span>Notebook Pro 14</span><b>3 un.</b></div>
+                  <div class="stock-item"><span>Headset Studio</span><b>4 un.</b></div>
+                  <div class="stock-item"><span>Hub USB-C</span><b>5 un.</b></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="floating-card floating-order">
+            <span class="float-icon">✓</span>
+            <div><small>Pedido aprovado</small><strong>ORD-2026-1248</strong></div>
+          </div>
+          <div class="floating-card floating-stock">
+            <span class="float-icon purple">↻</span>
+            <div><small>Estoque sincronizado</small><strong>Transação concluída</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust-strip" aria-label="Tecnologias principais">
+      <div class="container trust-grid">
+        <span>NestJS</span><span>Next.js 16</span><span>PostgreSQL</span><span>Prisma ORM</span><span>Docker</span><span>GitHub Actions</span>
+      </div>
+    </section>
+
+    <section class="section" id="produto">
+      <div class="container">
+        <div class="section-head centered">
+          <span class="eyebrow">PRODUTO</span>
+          <h2>Uma operação comercial completa, não apenas um CRUD.</h2>
+          <p>O OrderFlow conecta toda a jornada do cliente à rotina administrativa, aplicando regras de negócio no backend e mantendo rastreabilidade de cada alteração.</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card featured">
+            <span class="feature-number">01</span>
+            <div class="feature-icon blue">↯</div>
+            <h3>Checkout atômico</h3>
+            <p>Pedido, itens, reserva de estoque e movimentações são processados na mesma transação serializável, com rollback completo diante de qualquer falha.</p>
+            <div class="code-line"><code>Serializable + Idempotency-Key</code></div>
+          </article>
+          <article class="feature-card">
+            <span class="feature-number">02</span>
+            <div class="feature-icon green">⌁</div>
+            <h3>Estoque auditável</h3>
+            <p>Entradas, vendas, ajustes, cancelamentos e reposições ficam registradas com quantidade, motivo, produto, pedido e data.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-number">03</span>
+            <div class="feature-icon purple">◈</div>
+            <h3>Segurança por camadas</h3>
+            <p>Argon2id, access e refresh tokens, rotação de sessão, cookies HttpOnly, CSRF, CORS restrito, Helmet e rate limiting.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-number">04</span>
+            <div class="feature-icon orange">▦</div>
+            <h3>Painel operacional</h3>
+            <p>Indicadores de receita, pedidos, clientes, produtos e estoque baixo, além de controles para todo o ciclo do pedido.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-number">05</span>
+            <div class="feature-icon cyan">◎</div>
+            <h3>Experiência do cliente</h3>
+            <p>Catálogo pesquisável, carrinho, autenticação, checkout protegido, histórico e cancelamento de pedidos pendentes.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-number">06</span>
+            <div class="feature-icon red">{ }</div>
+            <h3>API documentada</h3>
+            <p>Endpoints versionados, validação de DTOs, erros padronizados, Swagger, health check, migrations e seed demonstrativo.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section demo-section" id="demo">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow light">DEMONSTRAÇÃO INTERATIVA</span>
+            <h2>Explore o produto sem precisar de banco ou servidor.</h2>
+          </div>
+          <p>Os dados abaixo são fictícios e executados integralmente no navegador. A aplicação real permanece disponível para implantação com API e PostgreSQL.</p>
+        </div>
+
+        <div class="demo-window">
+          <div class="demo-topbar">
+            <div class="demo-brand"><span>OF</span><strong>OrderFlow</strong></div>
+            <div class="demo-search">⌕ <span>Buscar pedido, produto ou cliente...</span></div>
+            <div class="demo-user"><span>AD</span><div><strong>Administrador</strong><small>admin@orderflow.demo</small></div></div>
+          </div>
+          <div class="demo-body">
+            <aside class="demo-sidebar" aria-label="Telas da demonstração">
+              <button class="demo-nav active" type="button" data-view="overview"><span>▦</span> Visão geral</button>
+              <button class="demo-nav" type="button" data-view="catalog"><span>◫</span> Catálogo</button>
+              <button class="demo-nav" type="button" data-view="checkout"><span>▣</span> Checkout</button>
+              <button class="demo-nav" type="button" data-view="orders"><span>⇄</span> Pedidos</button>
+              <button class="demo-nav" type="button" data-view="inventory"><span>▤</span> Estoque</button>
+              <button class="demo-nav" type="button" data-view="security"><span>◇</span> Segurança</button>
+              <div class="sidebar-spacer"></div>
+              <div class="demo-health"><i></i><div><strong>Todos os serviços</strong><small>Operacionais</small></div></div>
+            </aside>
+
+            <div class="demo-content">
+              <section class="demo-view active" data-panel="overview" aria-label="Visão geral">
+                <div class="demo-heading"><div><small>VISÃO GERAL</small><h3>Painel operacional</h3><p>Acompanhamento do desempenho comercial em tempo real.</p></div><button type="button" class="demo-action" data-toast="Dados atualizados com sucesso.">↻ Atualizar dados</button></div>
+                <div class="stats-row">
+                  <article><span class="stat-icon blue">R$</span><div><small>Receita processada</small><strong>R$ 86.420,90</strong><em>↗ 8,2% no período</em></div></article>
+                  <article><span class="stat-icon purple">▣</span><div><small>Pedidos</small><strong>1.248</strong><em>↗ 12,5% no período</em></div></article>
+                  <article><span class="stat-icon green">◎</span><div><small>Clientes</small><strong>386</strong><em>↗ 6,1% no período</em></div></article>
+                  <article><span class="stat-icon orange">!</span><div><small>Estoque baixo</small><strong>6 itens</strong><em class="warning">Requer atenção</em></div></article>
+                </div>
+                <div class="overview-grid">
+                  <article class="demo-card revenue-card">
+                    <div class="card-head"><div><strong>Receita por dia</strong><small>Últimos 7 dias</small></div><span>R$ 23.840</span></div>
+                    <div class="big-chart" aria-label="Gráfico demonstrativo de receita">
+                      <div class="grid-lines"></div>
+                      <svg viewBox="0 0 600 210" role="img" aria-label="Curva crescente de receita semanal">
+                        <defs><linearGradient id="areaGradient" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3157d5" stop-opacity=".28"/><stop offset="1" stop-color="#3157d5" stop-opacity="0"/></linearGradient></defs>
+                        <path class="area" d="M10 170 C65 155,85 165,120 130 S190 142,230 104 S300 120,350 78 S420 95,470 50 S535 70,590 24 L590 205 L10 205Z"/>
+                        <path class="line" d="M10 170 C65 155,85 165,120 130 S190 142,230 104 S300 120,350 78 S420 95,470 50 S535 70,590 24"/>
+                        <g class="dots"><circle cx="10" cy="170" r="4"/><circle cx="120" cy="130" r="4"/><circle cx="230" cy="104" r="4"/><circle cx="350" cy="78" r="4"/><circle cx="470" cy="50" r="4"/><circle cx="590" cy="24" r="4"/></g>
+                      </svg>
+                      <div class="chart-labels"><span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span><span>SEX</span><span>SÁB</span><span>DOM</span></div>
+                    </div>
+                  </article>
+                  <article class="demo-card">
+                    <div class="card-head"><div><strong>Status dos pedidos</strong><small>Distribuição atual</small></div></div>
+                    <div class="donut-wrap">
+                      <div class="donut"><span><strong>1.248</strong><small>pedidos</small></span></div>
+                      <div class="legend">
+                        <span><i class="paid"></i> Pagos <b>38%</b></span>
+                        <span><i class="processing"></i> Em processamento <b>27%</b></span>
+                        <span><i class="shipped"></i> Enviados <b>21%</b></span>
+                        <span><i class="delivered"></i> Entregues <b>14%</b></span>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+                <article class="demo-card table-card">
+                  <div class="card-head"><div><strong>Pedidos recentes</strong><small>Últimas movimentações</small></div><button type="button" data-view-target="orders">Ver todos →</button></div>
+                  <div class="responsive-table">
+                    <table>
+                      <thead><tr><th>Pedido</th><th>Cliente</th><th>Data</th><th>Total</th><th>Status</th></tr></thead>
+                      <tbody>
+                        <tr><td><strong>ORD-2026-1248</strong></td><td>Marina Costa</td><td>25 jul., 20:42</td><td>R$ 4.599,90</td><td><span class="status paid">Pago</span></td></tr>
+                        <tr><td><strong>ORD-2026-1247</strong></td><td>Lucas Martins</td><td>25 jul., 19:18</td><td>R$ 779,80</td><td><span class="status processing">Processando</span></td></tr>
+                        <tr><td><strong>ORD-2026-1246</strong></td><td>Ana Ribeiro</td><td>25 jul., 18:53</td><td>R$ 1.499,90</td><td><span class="status shipped">Enviado</span></td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </article>
+              </section>
+
+              <section class="demo-view" data-panel="catalog" aria-label="Catálogo">
+                <div class="demo-heading"><div><small>CATÁLOGO</small><h3>Produtos disponíveis</h3><p>Busca, disponibilidade e preços sempre revalidados pelo servidor.</p></div><div class="catalog-search">⌕ <input id="product-search" type="search" placeholder="Buscar nome ou SKU" aria-label="Buscar produto"></div></div>
+                <div class="product-demo-grid" id="product-grid"></div>
+              </section>
+
+              <section class="demo-view" data-panel="checkout" aria-label="Checkout">
+                <div class="demo-heading"><div><small>CHECKOUT</small><h3>Compra protegida por transação</h3><p>Uma única operação confirma estoque, cria o pedido e registra a auditoria.</p></div><span class="secure-pill">◇ Fluxo seguro</span></div>
+                <div class="checkout-layout">
+                  <article class="demo-card cart-demo">
+                    <div class="card-head"><div><strong>Seu carrinho</strong><small>2 produtos</small></div></div>
+                    <div class="cart-product"><div class="product-thumb laptop">▰</div><div><strong>Notebook Pro 14</strong><small>OF-NOTE-001</small><div class="qty"><button type="button">−</button><span>1</span><button type="button">+</button></div></div><b>R$ 4.599,90</b></div>
+                    <div class="cart-product"><div class="product-thumb headset">◖◗</div><div><strong>Headset Studio</strong><small>OF-HED-005</small><div class="qty"><button type="button">−</button><span>1</span><button type="button">+</button></div></div><b>R$ 429,90</b></div>
+                  </article>
+                  <article class="demo-card checkout-summary">
+                    <div class="card-head"><div><strong>Resumo do pedido</strong><small>Valores demonstrativos</small></div></div>
+                    <p><span>Subtotal</span><b>R$ 5.029,80</b></p>
+                    <p><span>Entrega</span><b class="success-text">Grátis</b></p>
+                    <p><span>Desconto</span><b>− R$ 150,00</b></p>
+                    <div class="checkout-total"><span>Total</span><strong>R$ 4.879,80</strong></div>
+                    <button class="button primary wide" type="button" id="checkout-button">Finalizar compra segura</button>
+                    <small class="checkout-note">Idempotency-Key impede cobranças ou pedidos duplicados.</small>
+                  </article>
+                </div>
+                <article class="transaction-flow">
+                  <div class="flow-step completed"><span>1</span><div><strong>Validar sessão</strong><small>JWT + CSRF</small></div></div><i></i>
+                  <div class="flow-step completed"><span>2</span><div><strong>Abrir transação</strong><small>Serializable</small></div></div><i></i>
+                  <div class="flow-step completed"><span>3</span><div><strong>Reservar estoque</strong><small>stock ≥ quantity</small></div></div><i></i>
+                  <div class="flow-step"><span>4</span><div><strong>Criar pedido</strong><small>Atomicamente</small></div></div>
+                </article>
+              </section>
+
+              <section class="demo-view" data-panel="orders" aria-label="Pedidos">
+                <div class="demo-heading"><div><small>PEDIDOS</small><h3>Operação e acompanhamento</h3><p>Transições controladas de status, cancelamento e reposição automática.</p></div><button type="button" class="demo-action" data-toast="Relatório exportado para demonstração.">⇩ Exportar</button></div>
+                <article class="demo-card table-card">
+                  <div class="order-filters"><button class="active" type="button">Todos <b>1.248</b></button><button type="button">Pendentes <b>18</b></button><button type="button">Processando <b>42</b></button><button type="button">Enviados <b>63</b></button></div>
+                  <div class="responsive-table">
+                    <table>
+                      <thead><tr><th>Pedido</th><th>Cliente</th><th>Itens</th><th>Total</th><th>Status</th><th>Próxima ação</th></tr></thead>
+                      <tbody>
+                        <tr><td><strong>ORD-2026-1248</strong><small>25/07/2026 · 20:42</small></td><td>Marina Costa<small>marina@email.demo</small></td><td>1 produto</td><td><strong>R$ 4.599,90</strong></td><td><span class="status paid">Pago</span></td><td><button class="table-action" type="button" data-toast="Pedido movido para processamento.">Processar</button></td></tr>
+                        <tr><td><strong>ORD-2026-1247</strong><small>25/07/2026 · 19:18</small></td><td>Lucas Martins<small>lucas@email.demo</small></td><td>2 produtos</td><td><strong>R$ 779,80</strong></td><td><span class="status processing">Processando</span></td><td><button class="table-action" type="button" data-toast="Pedido marcado como enviado.">Enviar</button></td></tr>
+                        <tr><td><strong>ORD-2026-1246</strong><small>25/07/2026 · 18:53</small></td><td>Ana Ribeiro<small>ana@email.demo</small></td><td>1 produto</td><td><strong>R$ 1.499,90</strong></td><td><span class="status shipped">Enviado</span></td><td><button class="table-action" type="button" data-toast="Pedido marcado como entregue.">Entregar</button></td></tr>
+                        <tr><td><strong>ORD-2026-1245</strong><small>25/07/2026 · 17:21</small></td><td>Felipe Lima<small>felipe@email.demo</small></td><td>3 produtos</td><td><strong>R$ 819,70</strong></td><td><span class="status delivered">Entregue</span></td><td><span class="finalized">Finalizado</span></td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </article>
+                <div class="order-detail-grid">
+                  <article class="demo-card"><div class="card-head"><div><strong>Máquina de estados</strong><small>Transições permitidas</small></div></div><div class="state-flow"><span>Pendente</span><i>→</i><span>Pago</span><i>→</i><span>Processando</span><i>→</i><span>Enviado</span><i>→</i><span>Entregue</span></div></article>
+                  <article class="demo-card audit-note"><span>↺</span><div><strong>Cancelamento consistente</strong><p>Pedidos cancelados antes do envio devolvem automaticamente os itens ao estoque e geram uma movimentação de reposição.</p></div></article>
+                </div>
+              </section>
+
+              <section class="demo-view" data-panel="inventory" aria-label="Estoque">
+                <div class="demo-heading"><div><small>ESTOQUE</small><h3>Movimentações auditáveis</h3><p>Cada alteração preserva origem, motivo, quantidade e relacionamento com o pedido.</p></div><button type="button" class="demo-action" data-toast="Ajuste demonstrativo registrado.">+ Novo ajuste</button></div>
+                <div class="inventory-stats">
+                  <article><small>Valor em estoque</small><strong>R$ 128.430,20</strong></article>
+                  <article><small>Unidades disponíveis</small><strong>1.840</strong></article>
+                  <article><small>Produtos ativos</small><strong>84</strong></article>
+                  <article class="attention"><small>Abaixo do mínimo</small><strong>6</strong></article>
+                </div>
+                <article class="demo-card table-card">
+                  <div class="card-head"><div><strong>Histórico de movimentações</strong><small>Auditoria mais recente</small></div><div class="filters"><button class="active" type="button">Todas</button><button type="button">Entradas</button><button type="button">Saídas</button></div></div>
+                  <div class="responsive-table">
+                    <table>
+                      <thead><tr><th>Data</th><th>Produto</th><th>Tipo</th><th>Quantidade</th><th>Motivo</th><th>Pedido</th></tr></thead>
+                      <tbody>
+                        <tr><td>25 jul., 20:42</td><td><strong>Notebook Pro 14</strong><small>OF-NOTE-001</small></td><td><span class="movement sale">Venda</span></td><td><b class="negative">−1</b></td><td>Checkout confirmado</td><td>ORD-2026-1248</td></tr>
+                        <tr><td>25 jul., 19:18</td><td><strong>Headset Studio</strong><small>OF-HED-005</small></td><td><span class="movement sale">Venda</span></td><td><b class="negative">−2</b></td><td>Checkout confirmado</td><td>ORD-2026-1247</td></tr>
+                        <tr><td>25 jul., 17:06</td><td><strong>Hub USB-C 8 em 1</strong><small>OF-HUB-006</small></td><td><span class="movement entry">Entrada</span></td><td><b class="positive">+20</b></td><td>Reposição de fornecedor</td><td>—</td></tr>
+                        <tr><td>25 jul., 15:34</td><td><strong>Mouse Sem Fio</strong><small>OF-MOU-004</small></td><td><span class="movement return">Reposição</span></td><td><b class="positive">+1</b></td><td>Cancelamento do pedido</td><td>ORD-2026-1239</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </article>
+              </section>
+
+              <section class="demo-view" data-panel="security" aria-label="Segurança">
+                <div class="demo-heading"><div><small>SEGURANÇA</small><h3>Defesa em profundidade</h3><p>Controles aplicados à identidade, sessão, API, dados e infraestrutura.</p></div><span class="secure-pill success">✓ Checklist aplicado</span></div>
+                <div class="security-grid">
+                  <article class="security-card"><span>01</span><div><h4>Credenciais</h4><p>Senhas protegidas com Argon2id e requisitos mínimos de complexidade.</p></div><b>Ativo</b></article>
+                  <article class="security-card"><span>02</span><div><h4>Sessões</h4><p>Access token curto, refresh token rotativo e detecção de reutilização.</p></div><b>Ativo</b></article>
+                  <article class="security-card"><span>03</span><div><h4>Cookies</h4><p>HttpOnly, Secure em produção, SameSite e assinatura com segredo dedicado.</p></div><b>Ativo</b></article>
+                  <article class="security-card"><span>04</span><div><h4>Requisições</h4><p>CSRF vinculado à sessão, CORS restrito, validação e whitelist de campos.</p></div><b>Ativo</b></article>
+                  <article class="security-card"><span>05</span><div><h4>Autorização</h4><p>Controle de acesso por perfis ADMIN e CUSTOMER aplicado no backend.</p></div><b>Ativo</b></article>
+                  <article class="security-card"><span>06</span><div><h4>Resiliência</h4><p>Rate limiting, Helmet, erros seguros e checks de integridade no banco.</p></div><b>Ativo</b></article>
+                </div>
+                <article class="security-terminal">
+                  <div class="terminal-head"><span></span><span></span><span></span><b>security-check.log</b></div>
+                  <pre><code><span>$</span> npm run test:e2e
+✓ Authentication flow
+✓ Refresh token rotation
+✓ CSRF validation
+✓ Role authorization
+✓ Checkout idempotency
+✓ Concurrent stock reservation
+
+<span class="terminal-success">All security checks passed.</span></code></pre>
+                </article>
+              </section>
+            </div>
+          </div>
+        </div>
+        <p class="demo-disclaimer">Demonstração visual com dados fictícios. Nenhuma compra, login ou alteração real é executada nesta página.</p>
+      </div>
+    </section>
+
+    <section class="section engineering-section" id="engenharia">
+      <div class="container">
+        <div class="section-head centered">
+          <span class="eyebrow">ENGENHARIA</span>
+          <h2>Construído para demonstrar decisões técnicas que importam.</h2>
+          <p>O projeto evidencia arquitetura, consistência de dados, segurança, testes e operação — competências além da implementação visual.</p>
+        </div>
+        <div class="engineering-grid">
+          <article class="engineering-main">
+            <div class="eng-heading"><span>CHECKOUT</span><h3>Concorrência sem estoque negativo</h3><p>O fluxo usa transação serializável, atualização condicional e restrição no PostgreSQL para preservar a última unidade mesmo sob requisições simultâneas.</p></div>
+            <div class="checkout-code">
+              <div class="code-head"><span>orders.service.ts</span><b>TypeScript</b></div>
+              <pre><code><span class="kw">await</span> prisma.<span class="fn">$transaction</span>(
+  <span class="kw">async</span> (tx) => {
+    <span class="kw">const</span> reserved = <span class="kw">await</span> tx.product.<span class="fn">updateMany</span>({
+      where: { id, stock: { gte: quantity } },
+      data: { stock: { decrement: quantity } }
+    });
+
+    <span class="kw">if</span> (reserved.count === <span class="num">0</span>) {
+      <span class="kw">throw new</span> <span class="fn">OutOfStockException</span>();
+    }
+  },
+  { isolationLevel: <span class="str">'Serializable'</span> }
+);</code></pre>
+            </div>
+          </article>
+          <div class="engineering-side">
+            <article><span class="eng-icon">↻</span><div><h3>Idempotência</h3><p>A mesma chave não cria dois pedidos.</p></div><b>409 seguro</b></article>
+            <article><span class="eng-icon">⌁</span><div><h3>Rollback</h3><p>Falhou um item, toda a operação é revertida.</p></div><b>Atômico</b></article>
+            <article><span class="eng-icon">✓</span><div><h3>Integridade</h3><p>O banco também impede <code>stock &lt; 0</code>.</p></div><b>CHECK SQL</b></article>
+            <article><span class="eng-icon">▤</span><div><h3>Auditoria</h3><p>Toda venda gera uma movimentação rastreável.</p></div><b>Histórico</b></article>
+          </div>
+        </div>
+
+        <div class="quality-grid">
+          <article><strong>API REST</strong><span>Versionada em <code>/api/v1</code></span></article>
+          <article><strong>Testes</strong><span>Unitários, E2E e concorrência</span></article>
+          <article><strong>Documentação</strong><span>Swagger + Postman + guias</span></article>
+          <article><strong>Automação</strong><span>CI, Docker e health check</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section architecture-section" id="arquitetura">
+      <div class="container">
+        <div class="architecture-layout">
+          <div class="architecture-copy">
+            <span class="eyebrow light">ARQUITETURA</span>
+            <h2>Separação clara entre interface, aplicação e dados.</h2>
+            <p>O frontend Next.js utiliza uma rota proxy no mesmo domínio para conversar com a API NestJS, mantendo tokens em cookies protegidos. A camada de serviços concentra regras de negócio e o Prisma gerencia acesso transacional ao PostgreSQL.</p>
+            <ul>
+              <li><b>Frontend:</b> Next.js App Router + React 19</li>
+              <li><b>Backend:</b> NestJS, DTOs, guards e Swagger</li>
+              <li><b>Persistência:</b> Prisma ORM + PostgreSQL 17</li>
+              <li><b>Infraestrutura:</b> Docker Compose, Railway e Vercel</li>
+            </ul>
+            <a class="button light-button" href="https://github.com/drsklgfa/orderflow/tree/main/docs" target="_blank" rel="noreferrer">Abrir documentação</a>
+          </div>
+          <div class="architecture-diagram" aria-label="Diagrama de arquitetura">
+            <div class="arch-node users"><span>◎</span><strong>Usuários</strong><small>Cliente / Admin</small></div>
+            <div class="arch-arrow right"><i></i><b>HTTPS</b></div>
+            <div class="arch-node web"><span>◫</span><strong>Next.js</strong><small>Interface + Proxy</small></div>
+            <div class="arch-arrow down"><i></i><b>REST / Cookies</b></div>
+            <div class="arch-node api"><span>{ }</span><strong>NestJS API</strong><small>Regras + Segurança</small></div>
+            <div class="arch-split">
+              <div class="arch-arrow short"><i></i></div>
+              <div class="arch-arrow short"><i></i></div>
+            </div>
+            <div class="arch-bottom">
+              <div class="arch-node database"><span>▱</span><strong>PostgreSQL</strong><small>Dados + Transações</small></div>
+              <div class="arch-node docs"><span>▤</span><strong>Swagger</strong><small>Documentação API</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section deploy-section">
+      <div class="container deploy-card">
+        <div>
+          <span class="eyebrow">PRONTO PARA PORTFÓLIO</span>
+          <h2>Do código local à demonstração pública.</h2>
+          <p>A vitrine é publicada gratuitamente no GitHub Pages. O sistema completo pode ser implantado com frontend na Vercel e API/PostgreSQL na Railway.</p>
+        </div>
+        <div class="deploy-actions">
+          <a class="button primary" href="https://github.com/drsklgfa/orderflow" target="_blank" rel="noreferrer">Ver repositório no GitHub</a>
+          <button class="button secondary" type="button" id="copy-command" data-command="git clone https://github.com/drsklgfa/orderflow.git">Copiar comando de clone</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="brand footer-brand"><span class="brand-mark">OF</span><span><strong>OrderFlow</strong><small>E-commerce SaaS Full Stack</small></span></div>
+      <p>Projeto demonstrativo de portfólio. Dados apresentados nesta página são fictícios.</p>
+      <div class="footer-links"><a href="#inicio">Início</a><a href="#demo">Demo</a><a href="https://github.com/drsklgfa/orderflow" target="_blank" rel="noreferrer">GitHub</a></div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"><span>✓</span><p>Operação concluída.</p></div>
+</body>
+</html>

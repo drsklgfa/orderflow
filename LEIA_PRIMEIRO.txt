@@ -1,0 +1,14 @@
+ORDERFLOW — CORREÇÃO FINAL
+
+1. Extraia este ZIP.
+2. Copie TODOS os arquivos e pastas extraídos para dentro da sua pasta local atual "orderflow".
+3. Quando o Windows perguntar, escolha "Substituir os arquivos no destino".
+4. Não apague a pasta oculta .git da sua pasta local.
+5. Dê dois cliques em ATUALIZAR_GITHUB.bat.
+
+O script remove arquivos antigos incompatíveis, cria o commit e envia tudo ao GitHub.
+A Railway detectará o push e fará o novo deploy automaticamente.
+
+Após o deploy, teste:
+https://orderflow-prod.up.railway.app/api/v1/health
+https://orderflow-prod.up.railway.app/docs

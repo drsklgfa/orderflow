@@ -1,0 +1,64 @@
+name: Portfolio · GitHub Pages
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+    paths:
+      - "portfolio/**"
+      - ".github/workflows/pages.yml"
+      - "index.html"
+      - "404.html"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Validate and package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Validate static portfolio
+        run: |
+          python3 portfolio/validate.py
+          node --check portfolio/assets/app.js
+          test -s portfolio/index.html
+          test -s portfolio/assets/styles.css
+
+      - name: Prepare Pages artifact
+        run: |
+          rm -rf _site
+          mkdir -p _site
+          cp -R portfolio/. _site/
+          cp _site/index.html _site/404.html
+          touch _site/.nojekyll
+          rm -f _site/validate.py
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
